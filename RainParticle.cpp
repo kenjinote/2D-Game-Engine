@@ -5,6 +5,7 @@
 #include "Engine.h"
 
 RainParticle::RainParticle(Point2D initialPosition, Point2D initialSpeed)
+	: m_pBlueBrush(NULL)
 {
 	position = initialPosition;
 	speed = initialSpeed;
@@ -24,9 +25,9 @@ void RainParticle::Draw(ID2D1HwndRenderTarget* m_pRenderTarget)
 			&m_pBlueBrush
 		);
 	}
-
-	m_pRenderTarget->DrawLine(D2D1::Point2F(position.x, position.y), D2D1::Point2F(position.x, position.y - 10), m_pBlueBrush, 2.0f);
-
+	if (m_pBlueBrush) {
+		m_pRenderTarget->DrawLine(D2D1::Point2F((float)position.x, (float)position.y), D2D1::Point2F((float)position.x, (float)(position.y - 10)), m_pBlueBrush, 2.0f);
+	}
 }
 
 bool RainParticle::IsOld()

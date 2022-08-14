@@ -126,21 +126,24 @@ HRESULT MainApp::Initialize()
     );
     hr = m_hwnd ? S_OK : E_FAIL;
 
-    // Adjust it so the client area is RESOLUTION_X/RESOLUTION_Y
-    RECT rect1;
-    GetWindowRect(m_hwnd, &rect1);
-    RECT rect2;
-    GetClientRect(m_hwnd, &rect2);
+    if (SUCCEEDED(hr))
+    {
+        // Adjust it so the client area is RESOLUTION_X/RESOLUTION_Y
+        RECT rect1;
+        GetWindowRect(m_hwnd, &rect1);
+        RECT rect2;
+        GetClientRect(m_hwnd, &rect2);
 
-    SetWindowPos(
-        m_hwnd,
-        NULL,
-        rect1.left,
-        rect1.top,
-        RESOLUTION_X + ((rect1.right - rect1.left) - (rect2.right - rect2.left)),
-        RESOLUTION_Y + ((rect1.bottom - rect1.top) - (rect2.bottom - rect2.top)),
-        NULL
-    );
+        SetWindowPos(
+            m_hwnd,
+            NULL,
+            rect1.left,
+            rect1.top,
+            RESOLUTION_X + ((rect1.right - rect1.left) - (rect2.right - rect2.left)),
+            RESOLUTION_Y + ((rect1.bottom - rect1.top) - (rect2.bottom - rect2.top)),
+            NULL
+        );
+    }
 
     if (SUCCEEDED(hr))
     {

@@ -24,12 +24,12 @@ void FireParticle::Draw(ID2D1HwndRenderTarget* m_pRenderTarget)
 	double split = FIRE_PARTICLE_LIFETIME * 2.0 / 3.0;
 	if (age > split)
 	{
-		amountRed = 1 - (age - split) / (FIRE_PARTICLE_LIFETIME - split);
+		amountRed = (float)(1.0 - (age - split) / (FIRE_PARTICLE_LIFETIME - split));
 	}
 	float amountGreen = 0.0f;
 	if (age < split)
 	{
-		amountGreen = 1 - age / split;
+		amountGreen = (float)(1.0 - age / split);
 	}
 
 	ID2D1SolidColorBrush* m_pYellowBrush;
@@ -39,12 +39,14 @@ void FireParticle::Draw(ID2D1HwndRenderTarget* m_pRenderTarget)
 	);
 
 	D2D1_ELLIPSE ellipseBall = D2D1::Ellipse(
-		D2D1::Point2F(position.x + 
-						sidewaysMovement * sin((position.y + sidewaysMovementSeed) / sidewaysMovement), 
-					position.y),
+		D2D1::Point2F(
+			(float)(position.x + sidewaysMovement * sin((position.y + sidewaysMovementSeed) / sidewaysMovement)),
+			(float)position.y),
 		12, 12
 	);
-	m_pRenderTarget->FillEllipse(&ellipseBall, m_pYellowBrush);
+	if (m_pYellowBrush != NULL) {
+		m_pRenderTarget->FillEllipse(&ellipseBall, m_pYellowBrush);
+	}
 
 	SafeRelease(&m_pYellowBrush);
 }

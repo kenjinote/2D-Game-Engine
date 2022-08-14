@@ -9,9 +9,9 @@
 #pragma comment(lib, "dwrite")
 #pragma comment(lib, "Windowscodecs.lib")
 
-EngineBase::EngineBase() : m_pDirect2dFactory(NULL), m_pRenderTarget(NULL)
+EngineBase::EngineBase() : m_pDirect2dFactory(NULL), m_pRenderTarget(NULL), mousePosition(), objectList()
 {
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 }
 
 EngineBase::~EngineBase()
@@ -159,8 +159,8 @@ ID2D1Bitmap* EngineBase::LoadImage(LPCWSTR imageFile)
 	IWICFormatConverter* pConverter = NULL;
 	IWICImagingFactory* pIWICFactory = NULL;
 
-	CoInitializeEx(NULL, COINIT_MULTITHREADED);
-	CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, IID_IWICImagingFactory, reinterpret_cast<void**>(&pIWICFactory));
+	(void)CoInitializeEx(NULL, COINIT_MULTITHREADED);
+	(void)CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, IID_IWICImagingFactory, reinterpret_cast<void**>(&pIWICFactory));
 
 	HRESULT hr = pIWICFactory->CreateDecoderFromFilename(
 		imageFile,
